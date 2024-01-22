@@ -1,0 +1,6 @@
+@NetCongratulator_HostAddress = http://localhost:5237
+
+GET {{NetCongratulator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
