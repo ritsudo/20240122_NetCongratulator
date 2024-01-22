@@ -1,3 +1,5 @@
+using NetCongratulator.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,5 +23,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", () => @"Congratulator management API. Navigate to /swagger to open the Swagger test UI.");
 
 app.Run();

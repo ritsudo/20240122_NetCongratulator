@@ -6,5 +6,5 @@ public class UserCard
     public string? FirstName {get; set;}
     public string? LastName {get; set;}
     public DateTime? BirthdayDate {get; set;}
-    public Avatar? AvatarId {get; set;}
+    public Avatar? Avatar {get; set;}
 }
