@@ -4,5 +4,5 @@ public class Avatar
 {
     public int Id { get; set;}
 	
-    public string? AvatarBlob {get; set;}
+    public string? EmailAddress {get; set;}
 }
