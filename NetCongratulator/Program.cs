@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddRazorPages();
 builder.Services.AddSqlite<UserCardContext>("Data Source=NetCongratulator.db");
 
 builder.Services.AddScoped<UserCardService>();
@@ -21,14 +22,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/", () => @"Congratulator management API. Navigate to /swagger to open the Swagger test UI.");
+app.MapRazorPages();
+
+//app.MapGet("/", () => @"Congratulator management API. Navigate to /swagger to open the Swagger test UI.");
 
 app.Run();
