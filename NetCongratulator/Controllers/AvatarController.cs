@@ -1,4 +1,5 @@
 using NetCongratulator.Models;
+using NetCongratulator.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NetCongratulator.Controllers;
@@ -7,32 +8,64 @@ namespace NetCongratulator.Controllers;
 [Route("[controller]")]
 public class AvatarController : ControllerBase
 {
+    AvatarService _service;
 
-    public AvatarController()
+    public AvatarController(AvatarService service)
     {
+        _service = service;
     }
 
     [HttpGet("{id}")]
-    public IEnumerable<Avatar> GetById()
+    public ActionResult<Avatar> GetById(int id)
     {
-        return null;
+        var avatar = _service.GetById(id);
+
+        if (avatar is not null)
+        {
+            return avatar;
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 
     [HttpPost]
-    public IEnumerable<Avatar> Create()
+    public IActionResult Create(Avatar newAvatar)
     {
-        return null;
+        var avatar = _service.Create(newAvatar);
+        return CreatedAtAction(nameof(GetById), new { id = avatar!.Id }, avatar);
     }
 
-    [HttpPut("{id}/updateblob")]
-    public IEnumerable<Avatar> Update()
+    [HttpPut("{id}/updateavatar")]
+    public IActionResult UpdateAvatar(int id, string avatarBlob)
     {
-        return null;
+        var avatarToUpdate = _service.GetById(id);
+
+        if (avatarToUpdate is not null)
+        {
+            _service.UpdateAvatar(id, avatarBlob);
+            return NoContent();
+        }
+        else
+        {
+            return NotFound();
+        }
     }
-    
+
     [HttpDelete("{id}")]
-    public IEnumerable<Avatar> Delete()
+    public IActionResult Delete(int id)
     {
-        return null;
+        var avatar = _service.GetById(id);
+
+        if (avatar is not null)
+        {
+            _service.DeleteById(id);
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }

@@ -1,8 +1,12 @@
 namespace NetCongratulator.Models;
 
-public class Avatar
+public class TaskElement
 {
     public int Id { get; set;}
+	
+	public DateTime? CreatedAt {get; set;}
+	
+	public DateTime? UpdatedAt {get; set;}
 	
     public string? TaskName {get; set;}
 	
