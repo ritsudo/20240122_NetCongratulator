@@ -1,22 +1,30 @@
 using NetCongratulator.Models;
+using NetCongratulator.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetCongratulator.Services;
 
 public class UserCardService
 {
-    public UserCardService()
+    private readonly UserCardContext _context;
+    public UserCardService(UserCardContext context)
     {
-        
+        _context = context;
     }
 
     public IEnumerable<UserCard> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.UserCards
+            .AsNoTracking()
+            .ToList();
     }
 
     public UserCard? GetById(int id)
     {
-        throw new NotImplementedException();
+        return _context.UserCards
+            .Include(u => u.Avatar)
+            .AsNoTracking()
+            .SingleOrDefault(u => u.Id == id);
     }
 
     public UserCard? GetNearestByDate(DateTime dateTime)
@@ -26,21 +34,53 @@ public class UserCardService
 
     public UserCard? Create(UserCard newUserCard)
     {
-        throw new NotImplementedException();
+        _context.UserCards.Add(newUserCard);
+        _context.SaveChanges();
+
+        return newUserCard;
     }
 
-    public void UpdateData(int UserCardId, string UserCardName, string UserCardSurname, DateTime UserCardDateTime)
+    public void UpdateData(int userCardId, string userCardFirstName, string userCardLastName, DateTime userCardBirthdayDate)
     {
-        throw new NotImplementedException();
+        var userCardToUpdate = _context.UserCards.Find(userCardId);
+
+        if (userCardToUpdate is null) {
+            throw new InvalidOperationException("User Card does not exist");
+        }
+
+        userCardToUpdate.FirstName = userCardFirstName;
+        userCardToUpdate.LastName = userCardLastName;
+        userCardToUpdate.BirthdayDate = userCardBirthdayDate;
+
+        _context.SaveChanges();
     }
 
-    public void UpdateAvatar(int UserCardId, int AvatarId)
+    public void UpdateAvatar(int userCardId, int avatarId)
     {
-        throw new NotImplementedException();
+        var userCardToUpdate = _context.UserCards.Find(userCardId);
+        var avatarToAdd = _context.Avatars.Find(avatarId);
+
+        if (userCardToUpdate is null) {
+            throw new InvalidOperationException("User Card does not exist");
+        }
+
+        if (avatarToAdd is null) {
+            throw new InvalidOperationException("Avatar ID incorrect or does not exist");
+        }
+
+        userCardToUpdate.Avatar = avatarToAdd;
+        _context.SaveChanges();
     }
 
     public void DeleteById(int id)
     {
-        throw new NotImplementedException();
+        var userCardToDelete = _context.UserCards.Find(id);
+        if (userCardToDelete is not null)
+        {
+            _context.UserCards.Remove(userCardToDelete);
+            _context.SaveChanges();
+        } else {
+            throw new InvalidOperationException("User Card to delete does not exist");
+        }
     }
 }

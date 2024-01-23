@@ -12,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSqlite<UserCardContext>("Data Source=NetCongratulator.db");
 
+builder.Services.AddScoped<UserCardService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
