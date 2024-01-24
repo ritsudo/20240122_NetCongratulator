@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NetCongratulator.Models;
 using NetCongratulator.Services;
@@ -7,6 +8,7 @@ namespace NetCongratulator.Pages
 {
     public class IndexModel : PageModel
     {
+        private CultureInfo russianCulture = new CultureInfo("ru-RU");
         private readonly UserCardService _service;
         public IList<UserCard> UserCardList { get; set; } = default!;
 
