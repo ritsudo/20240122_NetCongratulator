@@ -4,7 +4,66 @@
     ViewData["Title"] = "Home page";
 }
 
+<!--
 <div class="text-center">
     <h1 class="display-4">Добро пожаловать</h1>
     <p>Здесь будет список дней рождения</p>
 </div>
+-->
+
+<form method="post">
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="NewUserCard.FirstName" class="control-label"></label>
+    <input asp-for="NewUserCard.FirstName" class="form-control" />
+    <span asp-validation-for="NewUserCard.FirstName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="NewUserCard.LastName" class="control-label"></label>
+    <input asp-for="NewUserCard.LastName" class="form-control" />
+    <span asp-validation-for="NewUserCard.LastName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="NewUserCard.BirthdayDate" class="control-label"></label>
+    <input asp-for="NewUserCard.BirthdayDate" class="form-control" />
+    <span asp-validation-for="NewUserCard.BirthdayDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <input type="submit" value="Добавить" class="btn btn-primary" />
+</div>
+</form>
+
+
+<h1>Список именинников: </h1>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Дата рождения</th>
+            <th scope="col">Изменить</th>
+            <th scope="col">Удалить</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var userCard in Model.UserCardList)
+    {
+        <tr>
+            <td>@userCard.FirstName</td>
+            <td>@userCard.LastName</td>
+            <td>@userCard.BirthdayDate</td>
+            <td>✏️</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@userCard.Id">
+                    <button class="btn btn-danger">❌</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
