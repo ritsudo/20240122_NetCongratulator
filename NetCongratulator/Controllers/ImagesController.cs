@@ -54,7 +54,31 @@ public class ImagesController : ControllerBase
         if (image == null)
             return NotFound();
 
-        var fileStream = new FileStream(image.FilePath, FileMode.Open);
-        return File(fileStream, image.ContentType);
+        if (image.FilePath is not null && image.ContentType is not null)
+        {
+            var fileStream = new FileStream(image.FilePath, FileMode.Open);
+            return File(fileStream, image.ContentType);
+        }
+            return NotFound();
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var image = _context.Images.FirstOrDefault(i => i.Id == id);
+
+        if(image is not null)
+        {
+            _context.Images.Remove(image);
+            _context.SaveChanges();
+
+            //add filepath remove logic
+
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
