@@ -34,23 +34,32 @@ public class UserCardService
 
     public UserCard? Create(UserCard newUserCard)
     {
+        newUserCard.CreatedAt = DateTime.Now;
         _context.UserCards.Add(newUserCard);
         _context.SaveChanges();
 
         return newUserCard;
     }
 
-    public void UpdateData(int userCardId, string userCardFirstName, string userCardLastName, DateTime userCardBirthdayDate)
+    public void UpdateData(int id, string UserCardName, string UserCardSurname, DateTime UserCardDateTime)
     {
-        var userCardToUpdate = _context.UserCards.Find(userCardId);
+        throw new NotImplementedException();
+    }
+
+    public void UpdateDataByCard(UserCard editUserCard)
+    {
+        var userCardToUpdate = _context.UserCards.Find(editUserCard.Id);
 
         if (userCardToUpdate is null) {
-            throw new InvalidOperationException("User Card does not exist");
+            throw new InvalidOperationException("User Card with given ID does not exist");
         }
 
-        userCardToUpdate.FirstName = userCardFirstName;
-        userCardToUpdate.LastName = userCardLastName;
-        userCardToUpdate.BirthdayDate = userCardBirthdayDate;
+        userCardToUpdate.Avatar = editUserCard.Avatar;
+        userCardToUpdate.FirstName = editUserCard.FirstName;
+        userCardToUpdate.LastName = editUserCard.LastName;
+        userCardToUpdate.BirthdayDate = editUserCard.BirthdayDate;
+
+        userCardToUpdate.UpdatedAt = DateTime.Now;
 
         _context.SaveChanges();
     }

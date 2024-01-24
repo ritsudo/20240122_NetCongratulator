@@ -6,19 +6,14 @@ using NetCongratulator.Services;
 
 namespace NetCongratulator.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel(UserCardService service) : PageModel
     {
-        private CultureInfo russianCulture = new CultureInfo("ru-RU");
-        private readonly UserCardService _service;
+        private readonly CultureInfo russianCulture = new CultureInfo("ru-RU");
+        private readonly UserCardService _service = service;
         public IList<UserCard> UserCardList { get; set; } = default!;
 
         [BindProperty]
         public UserCard NewUserCard { get; set; } = default!;
-
-        public IndexModel(UserCardService service)
-        {
-            _service = service;
-        }
 
         public void OnGet()
         {
@@ -40,6 +35,11 @@ namespace NetCongratulator.Pages
             _service.DeleteById(id);
 
             return Redirect("/");
+        }
+
+        public IActionResult OnPostEdit(int id)
+        {
+            return Redirect("/EditPage?id=" + id);
         }
     }
 }
