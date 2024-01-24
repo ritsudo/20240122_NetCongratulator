@@ -31,26 +31,10 @@ public class AvatarController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Avatar newAvatar)
+    public IActionResult Create(IFormFile file)
     {
-        var avatar = _service.Create(newAvatar);
+        var avatar = _service.Create(file);
         return CreatedAtAction(nameof(GetById), new { id = avatar!.Id }, avatar);
-    }
-
-    [HttpPut("{id}/updateavatar")]
-    public IActionResult UpdateAvatar(int id, string avatarBlob)
-    {
-        var avatarToUpdate = _service.GetById(id);
-
-        if (avatarToUpdate is not null)
-        {
-            _service.UpdateAvatar(id, avatarBlob);
-            return NoContent();
-        }
-        else
-        {
-            return NotFound();
-        }
     }
 
     [HttpDelete("{id}")]

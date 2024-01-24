@@ -11,6 +11,7 @@ public class UserCardContext : DbContext
 
     public DbSet<Avatar> Avatars => Set<Avatar>();
     public DbSet<EmailAddress> EmailAddresses => Set<EmailAddress>();
+    public DbSet<Image> Images => Set<Image>();
     public DbSet<TaskElement> TaskElements => Set<TaskElement>();
     public DbSet<UserCard> UserCards => Set<UserCard>();
 }

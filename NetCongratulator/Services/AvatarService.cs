@@ -14,12 +14,7 @@ public class AvatarService
         throw new NotImplementedException();
     }
 
-    public Avatar? Create(Avatar newAvatar)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpdateAvatar(int PizzaId, string AvatarBlob)
+    public Avatar? Create(IFormFile file)
     {
         throw new NotImplementedException();
     }
