@@ -1,11 +1,11 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Главная";
 }
 
 <div class="header-container">
-    <h1>Список именинников: </h1>
+    <h1>Ближайшие именинники: </h1>
     <button id="showFormButton" class="btn btn-primary" style="width: 300px;">Добавить нового</button>
 </div>
 
@@ -81,7 +81,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var userCard in Model.UserCardList.Reverse())
+        @foreach (var userCard in Model.UserCardList)
         {
             <tr>
                 <td>

@@ -12,6 +12,10 @@ public class ImagesController(ImageService service) : ControllerBase
 
     private readonly ImageService _service = service;
 
+    /// <summary>
+    /// Добавить изображение
+    /// </summary>
+    /// <returns>ID добавленного изображения</returns>
     [HttpPost]
     public async Task<IActionResult> UploadImage(IFormFile file)
     {
@@ -26,6 +30,10 @@ public class ImagesController(ImageService service) : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Получить изображение
+    /// </summary>
+    /// <returns>Файл изображения</returns>
     [HttpGet("{id}")]
     public ActionResult<Image> GetImage(int id)
     {

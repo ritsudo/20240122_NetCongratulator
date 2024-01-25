@@ -17,7 +17,7 @@ namespace NetCongratulator.Pages
 
         public void OnGet()
         {
-            UserCardList = _service.GetAll().ToList();
+            UserCardList = _service.GetAllWithinMonth().ToList();
         }
 
         public async Task<IActionResult> OnPost()

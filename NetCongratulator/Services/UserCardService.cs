@@ -43,6 +43,7 @@ public class UserCardService(UserCardContext context, ImageService imageService)
 
     public IEnumerable<UserCard> GetAllWithinMonth()
     {
+        int currentDayOfMonth = DateTime.Now.Day;
         int currentMonth = DateTime.Now.Month;
         int nextMonth = DateTime.Now.Month+1;
 
@@ -53,7 +54,9 @@ public class UserCardService(UserCardContext context, ImageService imageService)
 
         var query = _context.UserCards
             .Where(e => e.BirthdayDate.HasValue && 
-            (e.BirthdayDate.Value.Month == currentMonth || e.BirthdayDate.Value.Month == nextMonth));
+            ((e.BirthdayDate.Value.Month == currentMonth && e.BirthdayDate.Value.Day >= currentDayOfMonth) || e.BirthdayDate.Value.Month == nextMonth))
+            .OrderBy(e => e.BirthdayDate.Value.Month)
+            .ThenBy(e => e.BirthdayDate.Value.Day);
 
         return [.. query];
     }

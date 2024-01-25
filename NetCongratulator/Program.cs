@@ -1,16 +1,20 @@
 using System.Reflection;
-using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Builder;
 using NetCongratulator.Data;
 using NetCongratulator.Services;
+using NSwag;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddOpenApiDocument(settings => {
+    settings.Title = "Congratulator API";
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddRazorPages();
 builder.Services.AddSqlite<UserCardContext>("Data Source=NetCongratulator.db");
@@ -23,8 +27,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi(c => {
+        c.DocExpansion = "list";
+    });
 
     app.UseExceptionHandler("/Error");
     app.UseHsts();
