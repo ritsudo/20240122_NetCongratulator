@@ -25,7 +25,7 @@ public class UserCardController(UserCardService service) : ControllerBase
     /// Получить все карточки с пагинацией
     /// </summary>
     /// <returns>Все UserCards с пагинацией</returns>
-    [HttpGet("/ordered")]
+    [HttpGet("/Ordered")]
     public IEnumerable<UserCard> GetWithOffset(int offset, int limit)
     {
         return _service.GetWithOffset(offset, limit);
@@ -35,7 +35,7 @@ public class UserCardController(UserCardService service) : ControllerBase
     /// Получить все карточки с пагинацией и сортировкой (возрастание/убывание)
     /// </summary>
     /// <returns>Все UserCards с пагинацией и сортировкой</returns>
-    [HttpGet("/sorted")]
+    [HttpGet("/Sorted")]
     public IEnumerable<UserCard> GetWithOffsetAndSort(int offset, int limit, bool isAscending)
     {
         return _service.GetWithOffsetAndSort(offset, limit, isAscending);
@@ -45,7 +45,7 @@ public class UserCardController(UserCardService service) : ControllerBase
     /// Получить список ближайших ДР (текущий месяц - предстоящие, и следующий месяц)
     /// </summary>
     /// <returns>Список UserCards</returns>
-    [HttpGet("/nearest")]
+    [HttpGet("/Nearest")]
     public IEnumerable<UserCard> GetAllWithinMonth()
     {
         return _service.GetAllWithinMonth();
