@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NetCongratulator.Models;
 using NetCongratulator.Services;
 
 namespace NetCongratulator.Pages
 {
-    public class EditPageModel(UserCardService service) : PageModel
+    public class EditAvatarModel(UserCardService service) : PageModel
     {
         private readonly UserCardService _service = service;
 
@@ -16,7 +15,7 @@ namespace NetCongratulator.Pages
         public UserCard? UserCardToEdit { get; set; } = default!;
 
         [BindProperty]
-        public UserCard EditedUserCard { get; set; } = default!;
+        public EditImage UserImageEditDto { get; set; } = default!;
 
         public void OnGet()
         {
@@ -28,15 +27,19 @@ namespace NetCongratulator.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            if (!ModelState.IsValid || EditedUserCard == null)
+            if (!ModelState.IsValid || UserImageEditDto.Id == 0)
             {
                 return Page();
             }
 
-            EditedUserCard.Id = Id;
+            if (UserImageEditDto.File == null || UserImageEditDto.File.Length <= 0)
+            {
+                return Page();
+            }
 
-            await _service.UpdateDataByCard(EditedUserCard);
+            await _service.UpdateUserImage(UserImageEditDto.Id, UserImageEditDto.File);
             return Redirect("/");
+
         }
 
     }

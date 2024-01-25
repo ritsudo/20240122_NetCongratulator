@@ -10,8 +10,6 @@ public class ImageService(UserCardContext context, IWebHostEnvironment webHostEn
     private readonly UserCardContext _context = context;
     private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
 
-
-
     public async Task<Image?> UploadImage(IFormFile file)
     {
         if (file == null || file.Length == 0)
@@ -48,7 +46,7 @@ public class ImageService(UserCardContext context, IWebHostEnvironment webHostEn
         {
             FileName = fileName,
             ContentType = file.ContentType,
-            FilePath = filePath,
+            FilePath = fileName,
             UploadDate = DateTime.Now
         };
 

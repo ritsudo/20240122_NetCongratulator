@@ -59,6 +59,19 @@ public class UserCardController(UserCardService service) : ControllerBase
         }
     }
 
+    [HttpPut("{id}/updateimage")]
+    public async Task<ActionResult> UpdateUserImage(int id, IFormFile file)
+    {
+        try
+        {
+            var userCard = await _service.UpdateUserImage(id, file);
+            return Ok(userCard);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

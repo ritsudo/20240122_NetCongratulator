@@ -4,19 +4,10 @@
 }
 
 <div id="editForm">
-    <h1>Редактирование карточки</h1>
+    <h1>Редактирование данных карточки</h1>
     @if (Model.UserCardToEdit is not null)
     {
-        <div id="editAvatar">
-            @if (Model.UserCardToEdit.ImageName != null)
-            {
-                <img class="avatar-image" src="~/uploads/@Model.UserCardToEdit.ImageName" alt="Img error">
-            }
-            else
-            {
-                <img class="avatar-image" src="~/assets/no_avatar.png" alt="No avatar">
-            }
-        </div>
+        <a href="/EditAvatar?id=@Model.UserCardToEdit.Id">Изменить аватар</a>
 
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

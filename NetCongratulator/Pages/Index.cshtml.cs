@@ -41,5 +41,10 @@ namespace NetCongratulator.Pages
         {
             return Redirect("/EditPage?id=" + id);
         }
+
+        public IActionResult OnPostEditAvatar(int id)
+        {
+            return Redirect("/EditAvatar?id=" + id);
+        }
     }
 }
