@@ -11,9 +11,51 @@ public class UserCardService(UserCardContext context, ImageService imageService)
 
     public IEnumerable<UserCard> GetAll()
     {
-        return _context.UserCards
-            .AsNoTracking()
-            .ToList();
+        return [.. _context.UserCards.AsNoTracking()];
+    }
+
+    public IEnumerable<UserCard> GetWithOffset(int offset, int limit)
+    {
+        return [.. _context.UserCards
+            .Skip(offset)
+            .Take(limit)
+            .AsNoTracking()];
+    }
+
+    public IEnumerable<UserCard> GetWithOffsetAndSort(int offset, int limit, bool isAscending)
+    {
+        var query = _context.UserCards
+            .Skip(offset)
+            .Take(limit)
+            .AsNoTracking();
+
+        if (isAscending)
+        {
+            query = query.OrderBy(e => e.CreatedAt);
+        }
+        else
+        {
+            query = query.OrderByDescending(e => e.CreatedAt);
+        }
+
+        return [.. query];
+    }
+
+    public IEnumerable<UserCard> GetAllWithinMonth()
+    {
+        int currentMonth = DateTime.Now.Month;
+        int nextMonth = DateTime.Now.Month+1;
+
+        if (nextMonth > 12)
+        {
+            nextMonth = 1;
+        }
+
+        var query = _context.UserCards
+            .Where(e => e.BirthdayDate.HasValue && 
+            (e.BirthdayDate.Value.Month == currentMonth || e.BirthdayDate.Value.Month == nextMonth));
+
+        return [.. query];
     }
 
     public UserCard? GetById(int id)
@@ -79,7 +121,9 @@ public class UserCardService(UserCardContext context, ImageService imageService)
         {
             _context.UserCards.Remove(userCardToDelete);
             await _context.SaveChangesAsync();
-        } else {
+        }
+        else
+        {
             throw new InvalidOperationException("User Card to delete does not exist");
         }
     }

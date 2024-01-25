@@ -17,6 +17,24 @@ public class UserCardController(UserCardService service) : ControllerBase
         return _service.GetAll();
     }
 
+    [HttpGet("/ordered")]
+    public IEnumerable<UserCard> GetWithOffset(int offset, int limit)
+    {
+        return _service.GetWithOffset(offset, limit);
+    }
+
+    [HttpGet("/sorted")]
+    public IEnumerable<UserCard> GetWithOffsetAndSort(int offset, int limit, bool isAscending)
+    {
+        return _service.GetWithOffsetAndSort(offset, limit, isAscending);
+    }
+
+    [HttpGet("/nearest")]
+    public IEnumerable<UserCard> GetAllWithinMonth()
+    {
+        return _service.GetAllWithinMonth();
+    }
+
     [HttpGet("{id}")]
     public ActionResult<UserCard> GetById(int id)
     {
@@ -44,14 +62,14 @@ public class UserCardController(UserCardService service) : ControllerBase
     {
         var userCardToUpdate = _service.GetById(id);
 
-        if(userCardToUpdate is not null)
+        if (userCardToUpdate is not null)
         {
             userCardToUpdate.FirstName = FirstName;
             userCardToUpdate.LastName = LastName;
             userCardToUpdate.BirthdayDate = BirthdayDate;
 
             await _service.UpdateDataByCard(userCardToUpdate);
-            return NoContent();    
+            return NoContent();
         }
         else
         {
@@ -77,7 +95,7 @@ public class UserCardController(UserCardService service) : ControllerBase
     {
         var userCard = _service.GetById(id);
 
-        if(userCard is not null)
+        if (userCard is not null)
         {
             await _service.DeleteById(id);
             return Ok();
