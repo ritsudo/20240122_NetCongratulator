@@ -7,14 +7,9 @@ namespace NetCongratulator.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class UserCardController : ControllerBase
+public class UserCardController(UserCardService service) : ControllerBase
 {
-    UserCardService _service;
-
-    public UserCardController(UserCardService service)
-    {
-        _service = service;
-    }
+    private readonly UserCardService _service = service;
 
     [HttpGet]
     public IEnumerable<UserCard> GetAll()
@@ -38,36 +33,24 @@ public class UserCardController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(UserCard newUserCard)
+    public async Task<IActionResult> Create(UserCard newUserCard)
     {
-        var userCard = _service.Create(newUserCard);
+        var userCard = await _service.Create(newUserCard);
         return CreatedAtAction(nameof(GetById), new { id = userCard!.Id }, userCard);
     }
 
     [HttpPut("{id}/updatedata")]
-    public IActionResult UpdateData(int id, string UserCardName, string UserCardSurname, DateTime UserCardDateTime)
+    public async Task<IActionResult> UpdateData(int id, string FirstName, string LastName, DateTime BirthdayDate)
     {
         var userCardToUpdate = _service.GetById(id);
 
         if(userCardToUpdate is not null)
         {
-            _service.UpdateData(id, UserCardName, UserCardSurname, UserCardDateTime);
-            return NoContent();    
-        }
-        else
-        {
-            return NotFound();
-        }
-    }
+            userCardToUpdate.FirstName = FirstName;
+            userCardToUpdate.LastName = LastName;
+            userCardToUpdate.BirthdayDate = BirthdayDate;
 
-    [HttpPut("{id}/updateavatar")]
-    public IActionResult UpdateAvatar(int id, int avatarId)
-    {
-        var userCardToUpdate = _service.GetById(id);
-
-        if(userCardToUpdate is not null)
-        {
-            _service.UpdateAvatar(id, avatarId);
+            await _service.UpdateDataByCard(userCardToUpdate);
             return NoContent();    
         }
         else
@@ -77,13 +60,13 @@ public class UserCardController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         var userCard = _service.GetById(id);
 
         if(userCard is not null)
         {
-            _service.DeleteById(id);
+            await _service.DeleteById(id);
             return Ok();
         }
         else

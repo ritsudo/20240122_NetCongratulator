@@ -24,7 +24,7 @@ namespace NetCongratulator.Pages
             }
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid  || EditedUserCard == null)
             {
@@ -33,7 +33,7 @@ namespace NetCongratulator.Pages
 
             EditedUserCard.Id = Id;
 
-            _service.UpdateDataByCard(EditedUserCard);
+            await _service.UpdateDataByCard(EditedUserCard);
             return Redirect("/");
         }
     }

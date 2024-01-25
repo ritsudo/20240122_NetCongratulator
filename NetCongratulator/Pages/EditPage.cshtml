@@ -2,14 +2,22 @@
 @model NetCongratulator.Pages.EditPageModel
 @{
 }
-<div id="editAvatar">
-    <img src="~/assets/no_avatar.png" alt="No avatar">
-</div>
 
 <div id="editForm">
     <h1>Редактирование карточки</h1>
     @if (Model.UserCardToEdit is not null)
     {
+        <div id="editAvatar">
+            @if (Model.UserCardToEdit.ImageName != null)
+            {
+                <img class="avatar-image" src="~/uploads/@Model.UserCardToEdit.ImageName" alt="Img error">
+            }
+            else
+            {
+                <img class="avatar-image" src="~/assets/no_avatar.png" alt="No avatar">
+            }
+        </div>
+
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">

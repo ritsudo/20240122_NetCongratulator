@@ -87,11 +87,18 @@
                 <td>
                     <form method="post" asp-page-handler="Edit" asp-route-id="@userCard.Id">
                         <button class="btn btn-primary">
-                            <img src="~/assets/no_avatar.png" alt="No avatar">
+                            @if (userCard.ImageName != null)
+                            {
+                                <img class="avatar-image" src="~/uploads/@userCard.ImageName" alt="Img error">
+                            }
+                            else
+                            {
+                                <img class="avatar-image" src="~/assets/no_avatar.png" alt="No avatar">
+                            }
                         </button>
                     </form>
-                    
-                    </td>
+
+                </td>
                 <td>@userCard.FirstName</td>
                 <td>@userCard.LastName</td>
                 @if (userCard.BirthdayDate != null)

@@ -20,19 +20,19 @@ namespace NetCongratulator.Pages
             UserCardList = _service.GetAll().ToList();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid || NewUserCard == null)
             {
                 return Page();
             }
-            _service.Create(NewUserCard);
+            await _service.Create(NewUserCard);
             return Redirect("/");
         }
 
-        public IActionResult OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDelete(int id)
         {
-            _service.DeleteById(id);
+            await _service.DeleteById(id);
 
             return Redirect("/");
         }

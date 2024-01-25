@@ -16,7 +16,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddSqlite<UserCardContext>("Data Source=NetCongratulator.db");
 
 builder.Services.AddScoped<UserCardService>();
-builder.Services.AddScoped<AvatarService>();
+builder.Services.AddScoped<ImageService>();
 
 var app = builder.Build();
 

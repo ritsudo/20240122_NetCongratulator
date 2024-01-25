@@ -21,5 +21,5 @@ public class UserCard
     [Required]
     public DateTime? BirthdayDate {get; set;}
 	
-    public Avatar? Avatar {get; set;}
+    public string? ImageName {get; set;}
 }
