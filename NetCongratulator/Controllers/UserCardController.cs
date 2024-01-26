@@ -1,15 +1,16 @@
 using NetCongratulator.Services;
 using NetCongratulator.Models;
 using Microsoft.AspNetCore.Mvc;
+using NetCongratulator.Interfaces;
 
 namespace NetCongratulator.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 
-public class UserCardController(UserCardService service) : ControllerBase
+public class UserCardController(IUserCardService service) : ControllerBase
 {
-    private readonly UserCardService _service = service;
+    private readonly IUserCardService _service = service;
 
     /// <summary>
     /// Получить все карточки без сортировки
@@ -78,7 +79,10 @@ public class UserCardController(UserCardService service) : ControllerBase
     public async Task<IActionResult> Create(UserCard newUserCard)
     {
         var userCard = await _service.Create(newUserCard);
-        return CreatedAtAction(nameof(GetById), new { id = userCard!.Id }, userCard);
+        if (userCard is not null)
+            return CreatedAtAction(nameof(GetById), new { id = userCard!.Id }, userCard);
+        else
+            return BadRequest("Invalid input");
     }
 
     /// <summary>

@@ -1,10 +1,11 @@
 using NetCongratulator.Models;
 using NetCongratulator.Data;
 using Microsoft.EntityFrameworkCore;
+using NetCongratulator.Interfaces;
 
 namespace NetCongratulator.Services;
 
-public class UserCardService(UserCardContext context, ImageService imageService)
+public class UserCardService(UserCardContext context, ImageService imageService) : IUserCardService
 {
     private readonly UserCardContext _context = context;
     private readonly ImageService _imageService = imageService;
