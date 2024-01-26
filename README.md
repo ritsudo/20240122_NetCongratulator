@@ -10,3 +10,4 @@
 ## Front-end: Razor pages
 ## Database: SQLite (local file)
 ## Image service storage: local (wwwroot/uploads)
+## Tests: MSTest
