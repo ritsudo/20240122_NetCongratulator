@@ -1,8 +1,5 @@
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
 using NetCongratulator.Data;
 using NetCongratulator.Services;
-using NSwag;
 
 var builder = WebApplication.CreateBuilder(args);
 
