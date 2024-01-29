@@ -2,7 +2,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NetCongratulator.Interfaces;
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 using NetCongratulator.Services;
 
 namespace NetCongratulator.Pages

@@ -1,13 +1,13 @@
-using NetCongratulator.Models;
-using NetCongratulator.Data;
+using NetCongratulator.Domain;
+using NetCongratulator.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using NetCongratulator.Interfaces;
 
 namespace NetCongratulator.Services;
 
-public class UserCardService(UserCardContext context, ImageService imageService) : IUserCardService
+public class UserCardService(NetCongratulatorDbContext context, ImageService imageService) : IUserCardService
 {
-    private readonly UserCardContext _context = context;
+    private readonly NetCongratulatorDbContext _context = context;
     private readonly ImageService _imageService = imageService;
 
     public IEnumerable<UserCard> GetAll()

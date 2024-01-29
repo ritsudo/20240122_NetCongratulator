@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetCongratulator\NetCongratulator.csproj" />
+    <ProjectReference Include="..\NetCongratulator.Domain\NetCongratulator.Domain.csproj" />
+    <ProjectReference Include="..\NetCongratulator.Infrastructure\NetCongratulator.Infrastructure.csproj" />
+    <ProjectReference Include="..\NetCongratulator\NetCongratulator.API.csproj" />
   </ItemGroup>
 
 </Project>

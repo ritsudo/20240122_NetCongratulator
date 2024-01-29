@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using NetCongratulator.Interfaces;
 using NetCongratulator.Controllers;
-using NetCongratulator.Services;
 using Moq;
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 
 namespace NetCongratulator.Tests
 {
@@ -17,7 +16,7 @@ namespace NetCongratulator.Tests
             Mock<IUserCardService> mockService = new();
             UserCardController controller = new(mockService.Object);
 
-            UserCard userCard = new UserCard()
+            UserCard userCard = new()
             {
                 FirstName = "TestName",
                 LastName = "TestSurname",

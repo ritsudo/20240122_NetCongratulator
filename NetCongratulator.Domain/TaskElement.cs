@@ -1,4 +1,7 @@
-namespace NetCongratulator.Models;
+using System;
+using System.Collections.Generic;
+
+namespace NetCongratulator.Domain;
 
 public class TaskElement
 {

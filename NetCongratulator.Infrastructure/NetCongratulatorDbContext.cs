@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 
-namespace NetCongratulator.Data;
+namespace NetCongratulator.Infrastructure;
 
-public class UserCardContext : DbContext
+public class NetCongratulatorDbContext : DbContext
 {
-    public UserCardContext (DbContextOptions<UserCardContext> options) : base (options)
+    public NetCongratulatorDbContext (DbContextOptions<NetCongratulatorDbContext> options) : base (options)
     {
     }
 

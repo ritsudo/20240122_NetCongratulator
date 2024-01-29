@@ -1,4 +1,6 @@
-namespace NetCongratulator.Models;
+using System;
+
+namespace NetCongratulator.Domain;
 
 public class EmailAddress
 {

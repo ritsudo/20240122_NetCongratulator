@@ -1,6 +1,7 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NetCongratulator.Models;
+namespace NetCongratulator.Domain;
 
 public class Image
 {

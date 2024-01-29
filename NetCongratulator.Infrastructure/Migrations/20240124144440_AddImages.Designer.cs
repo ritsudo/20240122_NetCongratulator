@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NetCongratulator.Data;
+using NetCongratulator.Infrastructure;
 
 #nullable disable
 
-namespace NetCongratulator.Migrations
+namespace NetCongratulator.Infrastructure.Migrations
 {
-    [DbContext(typeof(UserCardContext))]
-    [Migration("20240125082040_ImagesModelRevision")]
-    partial class ImagesModelRevision
+    [DbContext(typeof(NetCongratulatorDbContext))]
+    [Migration("20240124144440_AddImages")]
+    partial class AddImages
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,29 @@ namespace NetCongratulator.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
-            modelBuilder.Entity("NetCongratulator.Models.EmailAddress", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.Avatar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AvatarBlob")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Avatars");
+                });
+
+            modelBuilder.Entity("NetCongratulator.Domain.EmailAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +72,7 @@ namespace NetCongratulator.Migrations
                     b.ToTable("EmailAddresses");
                 });
 
-            modelBuilder.Entity("NetCongratulator.Models.Image", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +95,7 @@ namespace NetCongratulator.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("NetCongratulator.Models.TaskElement", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.TaskElement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,10 +118,13 @@ namespace NetCongratulator.Migrations
                     b.ToTable("TaskElements");
                 });
 
-            modelBuilder.Entity("NetCongratulator.Models.UserCard", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.UserCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AvatarId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("BirthdayDate")
@@ -114,9 +139,6 @@ namespace NetCongratulator.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ImageName")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -127,23 +149,34 @@ namespace NetCongratulator.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvatarId");
+
                     b.ToTable("UserCards");
                 });
 
-            modelBuilder.Entity("NetCongratulator.Models.EmailAddress", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.EmailAddress", b =>
                 {
-                    b.HasOne("NetCongratulator.Models.TaskElement", null)
+                    b.HasOne("NetCongratulator.Domain.TaskElement", null)
                         .WithMany("Addresses")
                         .HasForeignKey("TaskElementId");
 
-                    b.HasOne("NetCongratulator.Models.UserCard", "UserCard")
+                    b.HasOne("NetCongratulator.Domain.UserCard", "UserCard")
                         .WithMany()
                         .HasForeignKey("UserCardId");
 
                     b.Navigation("UserCard");
                 });
 
-            modelBuilder.Entity("NetCongratulator.Models.TaskElement", b =>
+            modelBuilder.Entity("NetCongratulator.Domain.UserCard", b =>
+                {
+                    b.HasOne("NetCongratulator.Domain.Avatar", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
+
+                    b.Navigation("Avatar");
+                });
+
+            modelBuilder.Entity("NetCongratulator.Domain.TaskElement", b =>
                 {
                     b.Navigation("Addresses");
                 });

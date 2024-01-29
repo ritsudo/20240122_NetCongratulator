@@ -1,4 +1,4 @@
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 
 namespace NetCongratulator.Interfaces;
 

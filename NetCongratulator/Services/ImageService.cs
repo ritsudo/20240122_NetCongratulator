@@ -1,13 +1,11 @@
-using NetCongratulator.Models;
-using NetCongratulator.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
+using NetCongratulator.Domain;
+using NetCongratulator.Infrastructure;
 
 namespace NetCongratulator.Services;
 
-public class ImageService(UserCardContext context, IWebHostEnvironment webHostEnvironment)
+public class ImageService(NetCongratulatorDbContext context, IWebHostEnvironment webHostEnvironment)
 {
-    private readonly UserCardContext _context = context;
+    private readonly NetCongratulatorDbContext _context = context;
     private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
 
     public async Task<Image?> UploadImage(IFormFile file)

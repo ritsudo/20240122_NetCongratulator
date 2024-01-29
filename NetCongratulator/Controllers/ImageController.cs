@@ -1,7 +1,6 @@
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 using NetCongratulator.Services;
 using Microsoft.AspNetCore.Mvc;
-using NetCongratulator.Data;
 
 namespace NetCongratulator.Controllers;
 

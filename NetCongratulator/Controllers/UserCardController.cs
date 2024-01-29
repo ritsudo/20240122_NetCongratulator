@@ -1,5 +1,5 @@
 using NetCongratulator.Services;
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 using Microsoft.AspNetCore.Mvc;
 using NetCongratulator.Interfaces;
 

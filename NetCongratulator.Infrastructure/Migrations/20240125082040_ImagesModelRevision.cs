@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NetCongratulator.Migrations
+namespace NetCongratulator.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class ImagesModelRevision : Migration

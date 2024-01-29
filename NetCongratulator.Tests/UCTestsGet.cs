@@ -3,7 +3,7 @@ using NetCongratulator.Interfaces;
 using NetCongratulator.Controllers;
 using NetCongratulator.Services;
 using Moq;
-using NetCongratulator.Models;
+using NetCongratulator.Domain;
 
 namespace NetCongratulator.Tests
 {
