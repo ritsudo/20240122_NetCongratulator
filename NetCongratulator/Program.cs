@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using NetCongratulator.Infrastructure;
 using NetCongratulator.Interfaces;
 using NetCongratulator.Services;
@@ -15,6 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddHttpClient("NetCongratulatorAPI");
+
 builder.Services.AddSqlite<NetCongratulatorDbContext>("Data Source=NetCongratulator.db");
 
 builder.Services.AddScoped<IUserCardService, UserCardService>();

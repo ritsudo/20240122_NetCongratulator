@@ -4,21 +4,43 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NetCongratulator.Interfaces;
 using NetCongratulator.Domain;
 using NetCongratulator.Services;
+using System.Text.Json;
+using System.Collections.Generic;
+using NetCongratulator.API.Dto;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace NetCongratulator.Pages
 {
-    public class IndexModel(IUserCardService service) : PageModel
+    public class IndexModel(IUserCardService service, IHttpClientFactory httpClientFactory) : PageModel
     {
         private readonly CultureInfo russianCulture = new("ru-RU");
         private readonly IUserCardService _service = service;
-        public IList<UserCard> UserCardList { get; set; } = default!;
+
+        private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+
+
+        public IList<UserCardReceive> UserCardList { get; set; }
 
         [BindProperty]
         public UserCard NewUserCard { get; set; } = default!;
 
-        public void OnGet()
+
+        //public void OnGet()
+        //{
+        //    UserCardList = _service.GetAllWithinMonth().ToList();
+        //}
+
+        public async Task OnGet()
         {
-            UserCardList = _service.GetAllWithinMonth().ToList();
+            var httpClient = _httpClientFactory.CreateClient("NetCongratulatorAPI");
+
+            using HttpResponseMessage response = await httpClient.GetAsync(HttpContext.Request.GetDisplayUrl() + "Nearest");
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var contentStream = await response.Content.ReadAsStreamAsync();
+                UserCardList = await JsonSerializer.DeserializeAsync<IList<UserCardReceive>>(contentStream);
+            }
         }
 
         public async Task<IActionResult> OnPost()

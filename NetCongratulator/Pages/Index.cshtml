@@ -85,11 +85,11 @@
         {
             <tr>
                 <td>
-                    <form method="post" asp-page-handler="EditAvatar" asp-route-id="@userCard.Id">
+                    <form method="post" asp-page-handler="EditAvatar" asp-route-id="@userCard.id">
                         <button class="btn btn-primary">
-                            @if (userCard.ImageName != null)
+                            @if (userCard.imageName != null)
                             {
-                                <img class="avatar-image" src="~/uploads/@userCard.ImageName" alt="Img error">
+                                <img class="avatar-image" src="~/uploads/@userCard.imageName" alt="Img error">
                             }
                             else
                             {
@@ -99,23 +99,23 @@
                     </form>
 
                 </td>
-                <td>@userCard.FirstName</td>
-                <td>@userCard.LastName</td>
-                @if (userCard.BirthdayDate != null)
+                <td>@userCard.firstName</td>
+                <td>@userCard.lastName</td>
+                @if (userCard.birthdayDate != null)
                 {
-                    <td>@userCard.BirthdayDate?.ToString("d MMMM yyy")</td>
+                    <td>@userCard.birthdayDate?.ToString("d MMMM yyy")</td>
                 }
                 else
                 {
                     <td>Не указана</td>
                 }
                 <td>
-                    <form method="post" asp-page-handler="Edit" asp-route-id="@userCard.Id">
+                    <form method="post" asp-page-handler="Edit" asp-route-id="@userCard.id">
                         <button class="btn btn-primary">✏️</button>
                     </form>
                 </td>
                 <td>
-                    <form method="post" asp-page-handler="Delete" asp-route-id="@userCard.Id">
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@userCard.id">
                         <button class="btn btn-danger">❌</button>
                     </form>
                 </td>
